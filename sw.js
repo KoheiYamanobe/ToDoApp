@@ -1,7 +1,7 @@
-/* クエストログ - オフライン用のサービスワーカー
-   アプリを更新したら CACHE の数字を1つ上げてください（例: v1 -> v2）。
-   次にオンラインで開いたときに新しい内容へ入れ替わります。 */
-var CACHE = "questlog-v1";
+/* やることノート - オフライン用のサービスワーカー
+   アイコンやmanifestを変えたときは CACHE の数字を1つ上げてください（例: v1 -> v2）。
+   index.html だけの更新なら、次にオンラインで開いたときに自動で入れ替わります。 */
+var CACHE = "yarukoto-v1";
 var ASSETS = [
   "./",
   "./index.html",
@@ -22,9 +22,7 @@ self.addEventListener("install", function (e) {
 self.addEventListener("activate", function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
-      return Promise.all(keys.map(function (k) {
-        return k === CACHE ? null : caches.delete(k);
-      }));
+      return Promise.all(keys.map(function (k) { return k === CACHE ? null : caches.delete(k); }));
     }).then(function () { return self.clients.claim(); })
   );
 });
@@ -41,9 +39,7 @@ self.addEventListener("fetch", function (e) {
         caches.open(CACHE).then(function (c) { c.put("./index.html", copy); });
         return res;
       }).catch(function () {
-        return caches.match("./index.html").then(function (r) {
-          return r || caches.match("./");
-        });
+        return caches.match("./index.html").then(function (r) { return r || caches.match("./"); });
       })
     );
     return;

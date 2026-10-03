@@ -1,7 +1,7 @@
 /* やることノート - オフライン用のサービスワーカー
    アイコンやmanifestを変えたときは CACHE の数字を1つ上げてください（例: v1 -> v2）。
    index.html だけの更新なら、次にオンラインで開いたときに自動で入れ替わります。 */
-var CACHE = "yarukoto-v1";
+var CACHE = "yarukoto-v2";
 var ASSETS = [
   "./",
   "./index.html",

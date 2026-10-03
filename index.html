@@ -292,6 +292,73 @@ button{background:none;border:0;padding:0;cursor:pointer}
   border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--dim);
 }
 
+/* ---------- sprint ---------- */
+.tab .n:empty{display:none}
+.sp-strip{
+  margin-top:18px;background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;
+  padding:10px 14px 8px;cursor:pointer;transition:border-color .15s;
+}
+.sp-strip:hover{border-color:var(--line)}
+.sp-strip .h{display:flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.08em;color:var(--faint);margin-bottom:4px}
+.sp-strip .h .go{margin-left:auto;color:var(--accent);letter-spacing:0}
+.sp-row{display:flex;align-items:center;gap:9px;font-size:13.5px;padding:3px 0}
+.sp-row .tx{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-row .ct{font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.sp-no{
+  flex:0 0 auto;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;
+  font-size:11px;font-weight:700;background:var(--accent-soft);color:var(--accent);
+}
+.ok > .sp-no,.goal.ok .sp-no{background:var(--accent);color:#0E1620}
+.ng > .sp-no,.goal.ng .sp-no{background:rgba(232,121,107,.2);color:#FF9E92}
+.sp-empty{margin-top:18px;font-size:12.5px;color:var(--faint)}
+.sp-empty .link,.sp-notice{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.sp-head{display:flex;align-items:center;gap:6px}
+.sp-head .mid{flex:1 1 auto;text-align:center}
+.sp-head .wk{font-family:var(--mincho);font-size:16px;font-weight:600;letter-spacing:.06em}
+.sp-head .sub{font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.sp-hint{font-size:11.5px;color:var(--faint);text-align:center;margin:4px 0 0}
+.sp-notice{display:block;margin:10px auto 0;font-size:12.5px}
+.goal{
+  margin-top:14px;background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;
+  padding:12px;display:flex;flex-direction:column;gap:9px;
+}
+.goal-top{display:flex;gap:10px;align-items:center}
+.goal input.g-text{
+  flex:1 1 auto;min-width:0;background:none;border:0;border-bottom:1px solid transparent;
+  font-size:15.5px;font-weight:600;padding:3px 0;
+}
+.goal input.g-text::placeholder{color:var(--faint);font-weight:400}
+.goal input.g-text:focus{outline:none;border-bottom-color:var(--accent)}
+.g-field{display:flex;align-items:center;gap:8px}
+.g-field .k{flex:0 0 auto;font-size:11px;letter-spacing:.06em;color:var(--faint);width:60px}
+.g-field input{
+  flex:1 1 auto;min-width:0;background:var(--bg);border:1px solid var(--line-soft);border-radius:8px;
+  padding:6px 9px;font-size:13px;
+}
+.g-field input:focus{outline:none;border-color:var(--accent)}
+.g-more{display:none;flex-direction:column;gap:9px}
+.goal.has-text .g-more{display:flex}
+.g-prog{display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.g-bar{flex:1 1 auto;height:4px;background:var(--surface-2);border-radius:2px;overflow:hidden}
+.g-bar i{display:block;height:100%;background:var(--accent);border-radius:2px}
+.goal .list{gap:6px}
+.goal .task{background:var(--bg)}
+.goal .task.is-open{background:var(--surface-2)}
+.g-add input{
+  width:100%;background:none;border:1px dashed var(--line);border-radius:9px;padding:8px 11px;font-size:13.5px;
+}
+.g-add input::placeholder{color:var(--faint)}
+.g-add input:focus{outline:none;border-style:solid;border-color:var(--accent)}
+.g-review{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;padding-top:9px;border-top:1px solid var(--line-soft)}
+.g-review .k{font-size:11px;letter-spacing:.06em;color:var(--faint);width:60px}
+.g-review input{
+  flex:1 1 150px;min-width:0;background:var(--bg);border:1px solid var(--line-soft);border-radius:8px;
+  padding:6px 9px;font-size:13px;
+}
+.g-review input:focus{outline:none;border-color:var(--accent)}
+.pill.ng[aria-pressed="true"]{background:rgba(232,121,107,.14);border-color:rgba(232,121,107,.45);color:#FF9E92}
+.t-meta .goal-tag{color:var(--accent)}
+
 /* ---------- toast ---------- */
 .toast{
   position:fixed;left:50%;transform:translateX(-50%);z-index:80;
@@ -350,6 +417,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
       <button class="tab" role="tab" data-view="today" aria-selected="true">今日 <span class="n" id="nToday">0</span></button>
       <button class="tab" role="tab" data-view="plan" aria-selected="false">予定 <span class="n" id="nPlan">0</span></button>
       <button class="tab" role="tab" data-view="all" aria-selected="false">すべて <span class="n" id="nAll">0</span></button>
+      <button class="tab" role="tab" data-view="sprint" aria-selected="false">目標 <span class="n" id="nSprint"></span></button>
     </div>
   </div>
 </div>
@@ -404,6 +472,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
       <p class="note">
         一度開けば、あとは機内モードでも起動します。データはこの端末の中だけに保存され、どこにも送信されません。<br>
         完了したタスクは30日たつと自動で片づきます。<br>
+        「目標」タブは月曜はじまりの1週間ごとに、目標を3つまで立てられます。<br>
         キーボード: <span class="kbd">N</span> 新規 ・ <span class="kbd">/</span> 検索 ・ <span class="kbd">Ctrl+Z</span> 元に戻す ・ <span class="kbd">Esc</span> 閉じる
       </p>
     </div>
@@ -423,9 +492,11 @@ button{background:none;border:0;padding:0;cursor:pointer}
     tasks: [],
     cats: ["仕事", "生活", "学び", "健康"],
     view: "today",
-    catFilter: null
+    catFilter: null,
+    sprints: {}
   };
-  var draft = { cat: null, due: null };
+  var draft = { cat: null, due: null, goal: null };
+  var spOffset = 0; // 目標タブで見ている週（0=今週, -1=先週）
   var query = "";
   var openId = null;
   var history = [];
@@ -445,6 +516,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
         if (Array.isArray(d.tasks)) S.tasks = d.tasks;
         if (Array.isArray(d.cats) && d.cats.length === 4) S.cats = d.cats;
         if (typeof d.view === "string") S.view = d.view;
+        if (d.sprints && typeof d.sprints === "object") S.sprints = d.sprints;
       } catch (e) { /* 壊れていたら初期状態 */ }
       normalize();
       return;
@@ -488,6 +560,20 @@ button{background:none;border:0;padding:0;cursor:pointer}
     S.tasks.forEach(function (t, i) {
       if (typeof t.order !== "number") t.order = i;
       if (typeof t.memo !== "string") t.memo = "";
+      if (typeof t.goal !== "string") t.goal = null;
+    });
+    if (!S.sprints || typeof S.sprints !== "object" || Array.isArray(S.sprints)) S.sprints = {};
+    Object.keys(S.sprints).forEach(function (w) {
+      var sp = S.sprints[w];
+      if (!sp || !Array.isArray(sp.goals)) { delete S.sprints[w]; return; }
+      for (var i = 0; i < 3; i++) {
+        var g = sp.goals[i] || {};
+        sp.goals[i] = {
+          text: String(g.text || ""), crit: String(g.crit || ""),
+          result: g.result === "ok" || g.result === "ng" ? g.result : "", note: String(g.note || "")
+        };
+      }
+      sp.goals.length = 3;
     });
   }
   function save() {
@@ -555,6 +641,39 @@ button{background:none;border:0;padding:0;cursor:pointer}
     return Number(p[1]) + "/" + Number(p[2]);
   }
 
+  /* ---------- sprint (1週間の目標) ---------- */
+  // 週は月曜はじまり。キーはその週の月曜の日付（例 "2026-09-28"）
+  function weekKey(off) {
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() - ((d.getDay() + 6) % 7) + 7 * (off || 0));
+    return ymd(d);
+  }
+  function weekRange(w) {
+    var e = new Date(w + "T00:00:00");
+    e.setDate(e.getDate() + 6);
+    return fmtDate(w) + "〜" + fmtDate(ymd(e));
+  }
+  function blankGoal() { return { text: "", crit: "", result: "", note: "" }; }
+  function sprintOf(w, create) {
+    if (!S.sprints[w] && create) S.sprints[w] = { goals: [blankGoal(), blankGoal(), blankGoal()] };
+    return S.sprints[w] || null;
+  }
+  function goalKey(w, i) { return w + "#" + i; }
+  function liveGoals(w) {
+    var sp = S.sprints[w], out = [];
+    if (sp) sp.goals.forEach(function (g, i) { if (g.text.trim()) out.push({ g: g, i: i, key: goalKey(w, i) }); });
+    return out;
+  }
+  function goalOf(t) {
+    if (!t.goal) return null;
+    var p = t.goal.split("#"), sp = S.sprints[p[0]], g = sp && sp.goals[Number(p[1])];
+    return g && g.text.trim() ? { w: p[0], i: Number(p[1]), g: g } : null;
+  }
+  function goalTasks(key) { return S.tasks.filter(function (t) { return t.goal === key; }); }
+  function countDone(list) { return list.filter(function (t) { return t.done; }).length; }
+  var NUMS = ["1", "2", "3"];
+
   /* ---------- helpers ---------- */
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) {
@@ -602,6 +721,10 @@ button{background:none;border:0;padding:0;cursor:pointer}
     if (t.cat !== null && t.cat !== undefined && S.cats[t.cat]) {
       meta.push('<span class="m"><span class="dot" style="background:' + CAT_COLORS[t.cat] + '"></span>' + esc(S.cats[t.cat]) + "</span>");
     }
+    var go = goalOf(t);
+    if (go && go.w === weekKey(0) && S.view !== "sprint") {
+      meta.push('<span class="m goal-tag">◎ ' + esc(trim(go.g.text)) + "</span>");
+    }
     if (di) {
       if (isOver) meta.unshift('<span class="badge-over">' + esc(di.text) + " ・ " + fmtDate(t.due) + "</span>");
       else meta.push('<span class="m ' + (t.done ? "" : di.cls) + '">' + esc(di.text) + "</span>");
@@ -622,6 +745,65 @@ button{background:none;border:0;padding:0;cursor:pointer}
     return '<section class="group"><div class="group-h' + (danger ? " overdue" : "") + '">' +
       "<span>" + esc(label) + '</span><span class="n">' + items.length + '</span><span class="rule"></span></div>' +
       listHTML(items, draggable) + "</section>";
+  }
+
+  // 「今日」の上に出す、今週の目標の一覧（タップで目標タブへ）
+  function stripHTML() {
+    var w = weekKey(0), gs = liveGoals(w);
+    if (!gs.length) {
+      return '<div class="sp-empty">今週の目標がまだありません。 <button class="link" type="button" data-goto="sprint">決める</button></div>';
+    }
+    return '<div class="sp-strip" role="button" tabindex="0" data-goto="sprint">' +
+      '<div class="h"><span>今週の目標</span><span>' + weekRange(w) + '</span><span class="go">開く ›</span></div>' +
+      gs.map(function (x) {
+        var ts = goalTasks(x.key);
+        var cls = x.g.result === "ok" ? " ok" : (x.g.result === "ng" ? " ng" : "");
+        return '<div class="sp-row' + cls + '"><span class="sp-no">' + NUMS[x.i] + "</span>" +
+          '<span class="tx">' + esc(x.g.text) + "</span>" +
+          (ts.length ? '<span class="ct">' + countDone(ts) + "/" + ts.length + "</span>" : "") + "</div>";
+      }).join("") + "</div>";
+  }
+
+  function sprintHTML() {
+    var w = weekKey(spOffset), sp = S.sprints[w];
+    var goals = sp ? sp.goals : [blankGoal(), blankGoal(), blankGoal()];
+    var name = { "-1": "先週", "0": "今週", "1": "来週" }[String(spOffset)] || weekRange(w);
+    var h = '<div class="sp-head">' +
+      '<button class="iconbtn" type="button" data-sp="prev" aria-label="前の週"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+      '<div class="mid"><div class="wk">' + esc(name) + 'の目標</div><div class="sub">' + weekRange(w) + "</div></div>" +
+      '<button class="iconbtn" type="button" data-sp="next" aria-label="次の週"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>' +
+      '<p class="sp-hint">目標は3つまで。完了条件は1行で。</p>';
+    if (spOffset === 0) {
+      var pending = liveGoals(weekKey(-1)).filter(function (x) { return !x.g.result; }).length;
+      if (pending) h += '<button class="sp-notice" type="button" data-sp="prev">先週の振り返りがまだです（' + pending + "件）</button>";
+    }
+    goals.forEach(function (g, i) {
+      var key = goalKey(w, i);
+      var ts = goalTasks(key);
+      var open = ts.filter(function (t) { return !t.done; }).sort(byOrder);
+      var done = ts.filter(function (t) { return t.done; }).sort(function (a, b) { return (a.completedAt || 0) - (b.completedAt || 0); });
+      var cls = "goal" + (g.text.trim() ? " has-text" : "") + (g.result ? " " + g.result : "");
+      var pct = ts.length ? Math.round(done.length / ts.length * 100) : 0;
+      h += '<section class="' + cls + '" data-gi="' + i + '">' +
+        '<div class="goal-top"><span class="sp-no">' + NUMS[i] + "</span>" +
+        '<input class="g-text" data-gf="text" value="' + esc(g.text) + '" placeholder="目標' + NUMS[i] + 'を書く" maxlength="60" aria-label="目標' + NUMS[i] + '"></div>' +
+        '<div class="g-more">' +
+        '<label class="g-field"><span class="k">完了条件</span><input data-gf="crit" value="' + esc(g.crit) + '" placeholder="何ができたら達成？" maxlength="80"></label>' +
+        (ts.length ? '<div class="g-prog"><span class="g-bar"><i style="width:' + pct + '%"></i></span><span>' + done.length + "/" + ts.length + "</span></div>" +
+          '<ul class="list" data-drag="0">' + open.concat(done).map(taskHTML).join("") + "</ul>" : "") +
+        '<form class="g-add" data-gi="' + i + '" autocomplete="off"><input placeholder="＋ この目標のタスクを追加" maxlength="200" aria-label="目標' + NUMS[i] + 'のタスクを追加"></form>' +
+        '<div class="g-review"><span class="k">振り返り</span>' +
+        '<button class="pill" type="button" data-sp="res" data-val="ok" aria-pressed="' + (g.result === "ok") + '">達成</button>' +
+        '<button class="pill ng" type="button" data-sp="res" data-val="ng" aria-pressed="' + (g.result === "ng") + '">未達</button>' +
+        '<input data-gf="note" value="' + esc(g.note) + '" placeholder="理由をひとこと" maxlength="100"></div>' +
+        "</div></section>";
+    });
+    return h;
+  }
+
+  function sprintBadge() {
+    var gs = liveGoals(weekKey(0));
+    $("nSprint").textContent = gs.length ? gs.filter(function (x) { return x.g.result === "ok"; }).length + "/" + gs.length : "";
   }
 
   function render() {
@@ -662,6 +844,9 @@ button{background:none;border:0;padding:0;cursor:pointer}
             ' 件あります。<button class="link" type="button" data-goto="all">すべてを見る</button></div>' : "") +
           "</div>";
       }
+      html = stripHTML() + html;
+    } else if (S.view === "sprint") {
+      html = sprintHTML();
     } else if (S.view === "plan") {
       var eow = endOfWeek();
       var tomorrow = shift(1);
@@ -687,7 +872,9 @@ button{background:none;border:0;padding:0;cursor:pointer}
       .sort(function (a, b) { return (b.completedAt || 0) - (a.completedAt || 0); });
     $("doneLabel").textContent = "完了したもの（" + done.length + "）";
     $("doneList").innerHTML = done.map(taskHTML).join("");
-    $("doneSec").style.display = done.length && !query ? "" : "none";
+    $("doneSec").style.display = done.length && !query && S.view !== "sprint" ? "" : "none";
+    $("compose").style.display = S.view === "sprint" && !query ? "none" : "";
+    sprintBadge();
 
     document.querySelectorAll('.tab').forEach(function (b) {
       b.setAttribute("aria-selected", b.dataset.view === S.view ? "true" : "false");
@@ -725,10 +912,21 @@ button{background:none;border:0;padding:0;cursor:pointer}
       cats += '<button class="pill" type="button" data-set="cat" data-val="' + i + '" aria-pressed="' + (t.cat === i) + '">' +
         '<span class="dot" style="background:' + CAT_COLORS[i] + '"></span>' + esc(c) + "</button>";
     });
+    var gs = liveGoals(weekKey(0));
+    var goalRow = "";
+    if (gs.length || t.goal) {
+      goalRow = '<div class="row"><span class="lbl">今週の目標</span>' +
+        '<button class="pill" type="button" data-set="goal" data-val="" aria-pressed="' + (!t.goal) + '">なし</button>' +
+        gs.map(function (x) {
+          return '<button class="pill" type="button" data-set="goal" data-val="' + x.key + '" aria-pressed="' + (t.goal === x.key) + '">' +
+            NUMS[x.i] + " " + esc(trim(x.g.text)) + "</button>";
+        }).join("") + "</div>";
+    }
     box.innerHTML =
       '<input class="dt-title" value="' + esc(t.title) + '" maxlength="200" aria-label="タスク名">' +
       '<textarea placeholder="メモ" aria-label="メモ">' + esc(t.memo || "") + "</textarea>" +
       '<div class="row"><span class="lbl">カテゴリ</span>' + cats + "</div>" +
+      goalRow +
       '<div class="row"><span class="lbl">期限</span>' +
       '<button class="pill" type="button" data-set="due" data-val="' + today() + '" aria-pressed="' + (t.due === today()) + '">今日</button>' +
       '<button class="pill" type="button" data-set="due" data-val="' + shift(1) + '" aria-pressed="' + (t.due === shift(1)) + '">明日</button>' +
@@ -761,6 +959,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
       if (b) {
         snapshot("編集");
         if (b.dataset.set === "cat") t.cat = b.dataset.val === "" ? null : Number(b.dataset.val);
+        else if (b.dataset.set === "goal") t.goal = b.dataset.val || null;
         else t.due = b.dataset.val || null;
         save(); render(); noticeIfGone(t.id);
         return;
@@ -811,6 +1010,18 @@ button{background:none;border:0;padding:0;cursor:pointer}
   function onBoardClick(e) {
     var goto = e.target.closest("[data-goto]");
     if (goto) { setView(goto.dataset.goto); return; }
+    var sb = e.target.closest("[data-sp]");
+    if (sb) {
+      if (sb.dataset.sp === "prev" || sb.dataset.sp === "next") {
+        spOffset += sb.dataset.sp === "prev" ? -1 : 1;
+        closeDetail(); render();
+      } else if (sb.dataset.sp === "res") {
+        var g = sprintOf(weekKey(spOffset), true).goals[Number(sb.closest(".goal").dataset.gi)];
+        g.result = g.result === sb.dataset.val ? "" : sb.dataset.val;
+        save(); render();
+      }
+      return;
+    }
     var row = e.target.closest(".task");
     if (!row) return;
     var t = find(row.dataset.id);
@@ -823,6 +1034,44 @@ button{background:none;border:0;padding:0;cursor:pointer}
   }
   $("board").addEventListener("click", onBoardClick);
   $("doneList").addEventListener("click", onBoardClick);
+
+  // 目標カードの入力（打つたびに保存。再描画はしないのでフォーカスが外れない）
+  $("board").addEventListener("input", function (e) {
+    var f = e.target.dataset.gf;
+    if (!f) return;
+    var sec = e.target.closest(".goal");
+    var g = sprintOf(weekKey(spOffset), true).goals[Number(sec.dataset.gi)];
+    g[f] = e.target.value;
+    save();
+    if (f === "text") {
+      sec.classList.toggle("has-text", !!g.text.trim());
+      sprintBadge(); renderOpts();
+    }
+  });
+  // 目標カードからタスクを追加（期限なし・その目標に紐づけ）
+  $("board").addEventListener("submit", function (e) {
+    var form = e.target.closest(".g-add");
+    if (!form) return;
+    e.preventDefault();
+    var input = form.querySelector("input");
+    var title = input.value.trim();
+    if (!title) return;
+    var gi = form.dataset.gi;
+    snapshot("追加");
+    var minOrder = S.tasks.reduce(function (m, t) { return Math.min(m, t.order); }, 0);
+    S.tasks.push({
+      id: uid(), title: title, memo: "", cat: null, due: null, goal: goalKey(weekKey(spOffset), Number(gi)),
+      done: false, createdAt: Date.now(), completedAt: null, order: minOrder - 1
+    });
+    save(); closeDetail(); render();
+    var again = document.querySelector('.g-add[data-gi="' + gi + '"] input');
+    if (again) again.focus();
+  });
+  $("board").addEventListener("keydown", function (e) {
+    if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("sp-strip")) {
+      e.preventDefault(); setView("sprint");
+    }
+  });
 
   /* ---------- drag ---------- */
   var drag = null;
@@ -898,6 +1147,15 @@ button{background:none;border:0;padding:0;cursor:pointer}
     h += '<button class="pill" type="button" data-role="due" data-val="today" aria-pressed="' + (draft.due === today()) + '">今日</button>';
     h += '<button class="pill" type="button" data-role="due" data-val="tomorrow" aria-pressed="' + (draft.due === shift(1)) + '">明日</button>';
     h += '<span class="pill date"><input type="date" id="dueDate" aria-label="期限の日付" value="' + (draft.due || "") + '"></span>';
+    var gs = liveGoals(weekKey(0));
+    if (draft.goal && !gs.some(function (x) { return x.key === draft.goal; })) draft.goal = null;
+    if (gs.length) {
+      h += '<span class="sep"></span>';
+      gs.forEach(function (x) {
+        h += '<button class="pill" type="button" data-role="goal" data-val="' + x.key + '" aria-pressed="' + (draft.goal === x.key) + '">◎ ' +
+          NUMS[x.i] + " " + esc(trim(x.g.text)) + "</button>";
+      });
+    }
     optsEl.innerHTML = h;
   }
   function syncAdd() { addBtn.disabled = !titleIn.value.trim(); }
@@ -912,6 +1170,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
     var b = e.target.closest(".pill");
     if (!b || !b.dataset.role) return;
     if (b.dataset.role === "cat") draft.cat = b.dataset.val === "" ? null : Number(b.dataset.val);
+    else if (b.dataset.role === "goal") draft.goal = draft.goal === b.dataset.val ? null : b.dataset.val;
     else {
       var v = b.dataset.val === "today" ? today() : shift(1);
       draft.due = draft.due === v ? null : v;
@@ -931,12 +1190,13 @@ button{background:none;border:0;padding:0;cursor:pointer}
     var due = draft.due;
     if (!due && S.view === "today") due = today();
     S.tasks.push({
-      id: uid(), title: title, memo: "", cat: draft.cat, due: due,
+      id: uid(), title: title, memo: "", cat: draft.cat, due: due, goal: draft.goal,
       done: false, createdAt: Date.now(), completedAt: null, order: minOrder - 1
     });
     save();
     titleIn.value = "";
     draft.due = null;
+    draft.goal = null;
     syncAdd(); renderOpts(); closeDetail(); render();
     var first = document.querySelector(".task");
     if (first) first.classList.add("entering");
@@ -945,6 +1205,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
 
   /* ---------- views / search ---------- */
   function setView(v) {
+    if (v === "sprint") spOffset = 0;
     S.view = v; closeDetail(); save(); render();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -999,6 +1260,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
     snapshot("読み込み前の状態");
     S.tasks = d.tasks;
     if (Array.isArray(d.cats) && d.cats.length === 4) S.cats = d.cats;
+    if (d.sprints && typeof d.sprints === "object") S.sprints = d.sprints;
     normalize(); save();
     renderCatEdit(); renderOpts(); closeDetail(); render();
   }
